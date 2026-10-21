@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: NotoSC; src: url(/assets/fonts/NotoSansSC.ttf); font-weight: 100 900; }
+@font-face { font-family: Smiley; src: url(/assets/fonts/smiley/SmileySans-Oblique.ttf); }
+@font-face { font-family: Poppins; src: url(/assets/fonts/Poppins-Medium.ttf); font-weight: 500; }
+@font-face { font-family: Poppins; src: url(/assets/fonts/Poppins-SemiBold.ttf); font-weight: 600; }
+@font-face { font-family: Poppins; src: url(/assets/fonts/Poppins-Bold.ttf); font-weight: 700; }
+@font-face { font-family: Poppins; src: url(/assets/fonts/Poppins-ExtraBold.ttf); font-weight: 800; }
+@font-face { font-family: Poppins; src: url(/assets/fonts/Poppins-Black.ttf); font-weight: 900; }
+html, body { margin: 0; background: #000; }
+</style></head>
+<body><canvas id="cv" width="1920" height="1080"></canvas>
+<script src="/data/script.js"></script>
+<script src="/render/engine.js"></script>
+<script src="/render/scenes.js"></script>
+<script>
+const cv = document.getElementById('cv'), cx = cv.getContext('2d');
+window.init = async () => {
+  const clips = await fetch('/data/clips.json').then(r => r.json());
+  await Promise.all(['500 40px NotoSC', '700 40px NotoSC', '800 40px NotoSC', '900 40px NotoSC', '40px Smiley', '500 40px Poppins', '600 40px Poppins', '700 40px Poppins', '800 40px Poppins', '900 40px Poppins']
+    .map(f => document.fonts.load(f, '测试ABC¥1')));
+  const info = setupAll(buildTimeline(), clips);
+  return { duration: info.duration, missing: info.missing, sfx: info.sfx.length };
+};
+async function waitImgs() { for (let i = 0; i < 600 && PENDING.size; i++) await new Promise(r => setTimeout(r, 5)); }
+let lastClipPurge = 0;
+window.renderAt = async (t, fmt = 'image/jpeg', q = 0.93) => {
+  for (let pass = 0; pass < 4; pass++) { drawFrame(cx, t); if (!PENDING.size) break; await waitImgs(); }
+  if (t - lastClipPurge > 20) { dropImgs('/assets/clips/'); lastClipPurge = t; }
+  return fmt ? cv.toDataURL(fmt, q) : null;
+};
+</script></body></html>

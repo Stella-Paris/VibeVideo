@@ -1,0 +1,17 @@
+{
+  "name": "game-spending-log-curve-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Code-rendered explainer video: 10块到10万 — 八大游戏对数氪金曲线",
+  "type": "module",
+  "scripts": {
+    "cues": "node tools/export_cues.mjs",
+    "mix": "python tools/mix.py",
+    "render": "node tools/render.mjs out/video_noaudio.mp4",
+    "preview": "node tools/render.mjs out/preview.mp4 8 0 '' 0.5",
+    "cover": "node tools/cover.mjs"
+  },
+  "dependencies": {
+    "puppeteer": "^23.11.1"
+  }
+}

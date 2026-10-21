@@ -1,0 +1,37 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: NotoSC; src: url(/assets/fonts/NotoSansSC.ttf); font-weight: 100 900; }
+@font-face { font-family: Poppins; src: url(/assets/fonts/Poppins-Black.ttf); font-weight: 900; }
+:root { --ink: #1F2A36; --accent: #FF5A36; --gold: #FFC21A; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1280px; height: 720px; overflow: hidden; background: var(--ink); }
+.grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 6px; }
+.grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shade { position: absolute; inset: 0;
+  background: radial-gradient(ellipse 62% 58% at 50% 50%, rgba(15,22,30,.82) 0, rgba(15,22,30,.62) 55%, rgba(15,22,30,.25) 100%); }
+.text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.zh { font: 900 168px/1.08 NotoSC; text-align: center; letter-spacing: 2px; paint-order: stroke fill;
+  -webkit-text-stroke: 16px var(--ink); filter: drop-shadow(0 10px 18px rgba(0,0,0,.55)); }
+.zh .a { color: var(--gold); }
+.zh .b { color: #fff; }
+.en { margin-top: 22px; font: 900 44px/1 Poppins; color: #fff; background: var(--accent); padding: 14px 30px; border-radius: 50px;
+  border: 5px solid #fff; box-shadow: 0 8px 18px rgba(0,0,0,.45); letter-spacing: 1px; }
+</style></head>
+<body>
+  <div class="grid" id="grid"></div>
+  <div class="shade"></div>
+  <div class="text">
+    <div class="zh"><span class="a">氪十万，</span><br><span class="b">还是十块？</span></div>
+    <div class="en">¥100,000 or ¥10?</div>
+  </div>
+<script>
+const ICONS = ['genshin.jpg', 'lads.jpg', 'justice.jpg', 'whiteout.jpg', 'hok.jpg', 'delta.jpg', 'wukong.png', 'landlord.jpg'];
+document.getElementById('grid').innerHTML = ICONS.map(f => `<img src="/assets/icons/${f}">`).join('');
+window.ready = async () => {
+  await Promise.all(['900 40px NotoSC', '900 40px Poppins'].map(f => document.fonts.load(f, '氪十万还是块ABC¥1')));
+  await Promise.all([...document.images].map(im => im.complete ? 0 : new Promise(r => { im.onload = im.onerror = r; })));
+  return true;
+};
+</script>
+</body></html>

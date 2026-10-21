@@ -1,0 +1,18 @@
+# build output (intermediate segments, raw mixes, rendered video)
+out/
+frames/
+
+# dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# uncompressed soundtrack masters are too large for GitHub; the repo ships mp3
+assets/music/*.wav
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
