@@ -1,5 +1,5 @@
 # 10块到10万：八大游戏对数氪金曲线
-
+Link: https://www.bilibili.com/video/BV1dvnB6sE6m
 **From ¥10 to ¥100,000 — the log-scale spending curve of 8 games**
 
 A 5½-minute (331.9 s, 1920×1080 @ 30 fps) bilingual (中文 / English) explainer video,
